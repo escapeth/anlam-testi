@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="TYT Türkçe için 40 soruluk sözcükte ve cümlede anlam testi: parantez içindeki açıklamayla uyuşmayan sözü bul. Cevap anahtarı ve açıklamalar test sonunda.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Anlam Testi">
+<meta property="og:description" content="TYT Türkçe için 40 soruluk sözcükte ve cümlede anlam testi: parantez içindeki açıklamayla uyuşmayan sözü bul. Cevap anahtarı ve açıklamalar test sonunda.">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171E31" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='white' stroke='%23C2255C' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23131C33'/%3E%3C/svg%3E">
+<title>Anlam Testi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Düzen: solda sınav kitapçığı sayfası (tek soru), sağda optik form; telefonda form alttan açılır. */
+:root{
+  color-scheme:light;
+  --bg:#EEF1F8; --surface:#FFFFFF; --sunk:#F5F7FC; --ink:#131C33; --muted:#4F5B78; --line:#D5DBEA;
+  --primary:#1C4FC4; --on-primary:#FFFFFF; --primary-soft:#E3EBFD;
+  --form:#C2255C; --form-soft:#FCE6EE;
+  --ok:#0B7445; --ok-soft:#DCF3E6; --bad:#B3261E; --bad-soft:#FBE4E2; --flag:#8A5300; --flag-soft:#FFEFD0;
+  --shadow:0 1px 2px rgba(19,28,51,.06),0 10px 28px rgba(19,28,51,.08);
+  --scrim:rgba(19,28,51,.45);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-ui:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-text:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1321; --surface:#171E31; --sunk:#1D2540; --ink:#E9EDF7; --muted:#A6B0C8; --line:#2D3753;
+    --primary:#86A8FF; --on-primary:#0B1020; --primary-soft:#1E2C55;
+    --form:#FF86AD; --form-soft:#3B1D2C;
+    --ok:#62D69D; --ok-soft:#12352A; --bad:#FF8E84; --bad-soft:#3F1C1B; --flag:#FFC76A; --flag-soft:#3B2D11;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
+    --scrim:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1321; --surface:#171E31; --sunk:#1D2540; --ink:#E9EDF7; --muted:#A6B0C8; --line:#2D3753;
+  --primary:#86A8FF; --on-primary:#0B1020; --primary-soft:#1E2C55;
+  --form:#FF86AD; --form-soft:#3B1D2C;
+  --ok:#62D69D; --ok-soft:#12352A; --bad:#FF8E84; --bad-soft:#3F1C1B; --flag:#FFC76A; --flag-soft:#3B2D11;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
+  --scrim:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in,.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar-in{display:flex;align-items:center;gap:12px;min-height:56px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.15rem;letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:8px}
+.brand i{width:18px;height:18px;border-radius:50%;border:2px solid var(--form);background:radial-gradient(circle,var(--ink) 0 45%,transparent 50%)}
+.clock{font-variant-numeric:tabular-nums;font-weight:600;color:var(--muted);padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:.9rem}
+.prog{height:4px;background:var(--line)}
+.prog b{display:block;height:100%;width:0;background:var(--primary);transition:width .25s ease-out}
+.wrap{padding-block:20px 48px}
+
+.btn{min-height:44px;padding:10px 18px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;transition:background .15s,border-color .15s,transform .1s}
+.btn:hover{border-color:var(--primary)}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn.quiet{border-color:transparent;background:transparent;color:var(--primary);text-decoration:underline;text-underline-offset:3px}
+.btn.flag[aria-pressed="true"]{background:var(--flag-soft);border-color:var(--flag);color:var(--flag)}
+.btn.sm{min-height:40px;padding:8px 12px;font-size:.9rem}
+
+/* Başlangıç */
+.start{display:grid;gap:20px;max-width:720px;margin:0 auto}
+.start h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.8rem,6vw,2.7rem);line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+.start .lead{color:var(--muted);font-size:1.05rem;max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.facts li{padding:6px 12px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:.9rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px}
+.tips h2,.sheet h2,.res h2{font-family:var(--f-display);font-size:1.1rem;font-weight:600;margin-bottom:10px}
+.tips ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.demo{margin-top:16px;padding:14px;border-radius:12px;background:var(--sunk);border:1px dashed var(--line)}
+.demo .passage{line-height:1.8}
+.demo small{display:block;color:var(--muted);font-size:.9rem;line-height:1.5}
+
+/* Soru */
+.exam{display:grid;gap:20px;align-items:start}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.qn{font-family:var(--f-display);font-weight:800;font-size:1.35rem}
+.qn small{font-weight:600;color:var(--muted);font-size:.95rem}
+.tag{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--form);background:var(--form-soft);padding:4px 10px;border-radius:999px}
+.passage{font-family:var(--f-text);font-size:1.08rem;line-height:2.4;max-width:66ch}
+.t{white-space:nowrap}
+.t u{text-decoration-thickness:1.5px;text-underline-offset:3px}
+.tn{position:relative;display:inline-block;line-height:1.2}
+.tn i{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:2px;font:700 .76rem/1 var(--f-ui);font-style:normal;color:var(--primary)}
+.t.hl u{background:var(--bad-soft);text-decoration-color:var(--bad)}
+.t.hl + .g{background:var(--bad-soft)}
+.stem{font-weight:700;margin:14px 0 14px;max-width:62ch}
+.opts{display:grid;gap:10px}
+.opts-row{grid-template-columns:repeat(5,minmax(0,1fr))}
+.opt{display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 12px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;transition:background .15s,border-color .15s}
+.opt:hover{border-color:var(--primary)}
+.opts-row .opt{flex-direction:column;justify-content:center;gap:6px;padding:10px 4px}
+.opts-col .ot{font-family:var(--f-text);font-size:1.03rem;line-height:1.55;min-width:0}
+.opts-row .ot{font-weight:700}
+.bub{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--form);color:var(--form);display:grid;place-items:center;font-weight:700;font-size:.9rem;font-family:var(--f-ui)}
+.opt[aria-checked="true"]{border-color:var(--ink);background:var(--sunk)}
+.opt[aria-checked="true"] .bub{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.hint{color:var(--muted);font-size:.85rem;margin-top:10px}
+.nav{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.nav .btn{flex:1 1 0;min-width:88px;padding-inline:8px}
+.btn.flag[aria-pressed="true"]::before{content:"✓ "}
+.btn.sm,.clock{white-space:nowrap}
+@media (hover:none){.kb{display:none}}
+.end{margin-top:6px;text-align:center}
+
+/* Optik form */
+.sheet h2{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px;grid-auto-flow:column;grid-template-rows:repeat(20,auto)}
+.row{display:flex;align-items:center;gap:4px;min-height:34px;padding:3px 4px;border:1.5px solid transparent;border-radius:8px;background:transparent;font-variant-numeric:tabular-nums}
+.row:hover{background:var(--sunk)}
+.row.cur{border-color:var(--primary);background:var(--primary-soft)}
+.rn{width:22px;text-align:right;font-weight:700;font-size:.85rem;margin-right:4px}
+.row.fl .rn{color:var(--flag);text-decoration:underline wavy}
+.b{width:21px;height:21px;border-radius:50%;border:1.5px solid var(--form);color:var(--form);font-size:.7rem;font-weight:700;display:grid;place-items:center;flex:none}
+.b.on{background:var(--ink);border-color:var(--ink);color:var(--ink)}
+.b.ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.b.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.mark{margin-left:2px;flex:none;width:12px;text-align:center;font-weight:800;font-size:.85rem}
+#key{max-width:420px}
+.mark.ok{color:var(--ok)} .mark.bad{color:var(--bad)} .mark.bos{color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:.82rem;margin-top:12px}
+.sheet > .btn{width:100%;margin-top:14px}
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:19}
+@media (max-width:919px){
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;max-height:82%;overflow:auto;border-radius:18px 18px 0 0;visibility:hidden;transform:translateY(100%);transition:transform .25s ease-out,visibility 0s .25s;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+  .sheet.open{visibility:visible;transform:none;transition:transform .25s ease-out}
+}
+@media (min-width:920px){
+  .exam{grid-template-columns:minmax(0,1fr) 392px}
+  .sheet{position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px);max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px);overflow:hidden auto}
+  #sheetBtn,#sheetClose,.scrim{display:none!important}
+  .rows{gap:2px 14px} .row{min-height:28px}
+  .card.q{padding:28px}
+}
+@media (max-width:420px){
+  .card{padding:16px} .opts-row{gap:6px} .rows{gap:4px 6px} .row{gap:2px;padding:3px 2px} .b{width:19px;height:19px} .rn{width:18px;margin-right:3px}
+  .bar-in{gap:8px} .brand{font-size:1.05rem} .btn.sm{padding:8px 10px} .clock{padding:6px 8px}
+}
+@media (max-width:380px){ .brand i{display:none} }
+@media (max-width:350px){ .rows{grid-template-columns:1fr;grid-auto-flow:row;grid-template-rows:none} }
+
+/* Sonuç */
+.res{display:grid;gap:20px;max-width:820px;margin:0 auto}
+.res h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.6rem,5vw,2.2rem);letter-spacing:-.02em}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+@media (max-width:640px){.score{grid-template-columns:1fr 1fr}.tile.net{grid-column:1/-1}}
+.tile{padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.tile b{display:block;font-family:var(--f-display);font-size:1.9rem;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{color:var(--muted);font-size:.88rem;font-weight:600}
+.tile.net{background:var(--primary);border-color:var(--primary)}
+.tile.net b,.tile.net span{color:var(--on-primary)}
+.tile.d b{color:var(--ok)} .tile.y b{color:var(--bad)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.revs{display:grid;gap:14px}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;scroll-margin-top:90px}
+.rev .passage{font-size:1.02rem}
+.pill{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px}
+.rev.dogru .pill{background:var(--ok-soft);color:var(--ok)}
+.rev.yanlis .pill{background:var(--bad-soft);color:var(--bad)}
+.rev.bos .pill{background:var(--sunk);color:var(--muted)}
+.ropts{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px}
+.ropts li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;border:1.5px solid transparent}
+.ropts .ot{font-family:var(--f-text);min-width:0}
+.ropts li.ok{background:var(--ok-soft);border-color:var(--ok)}
+.ropts li.bad{background:var(--bad-soft);border-color:var(--bad)}
+.ropts .bub{width:26px;height:26px;font-size:.8rem}
+.mk{font:700 .78rem var(--f-ui);font-style:normal;white-space:nowrap;margin-left:6px}
+li.ok .mk{color:var(--ok)} li.bad .mk{color:var(--bad)}
+.ans{font-weight:600;margin-bottom:10px}
+.ans .c{color:var(--ok)} .ans .w{color:var(--bad)}
+.why{background:var(--sunk);border-radius:10px;padding:12px 14px;font-size:.97rem}
+.empty{color:var(--muted);padding:20px;text-align:center}
+
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:22px;max-width:min(420px,calc(100% - 32px));box-shadow:var(--shadow)}
+dialog::backdrop{background:var(--scrim)}
+dialog h2{font-family:var(--f-display);font-size:1.25rem;margin-bottom:8px}
+dialog p{color:var(--muted)}
+.dbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.dbtns .btn{flex:1 1 140px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand"><i aria-hidden="true"></i>Anlam Testi</div>
+    <span class="clock" id="timer" aria-label="Geçen süre" hidden>00:00</span>
+    <button type="button" class="btn sm" id="sheetBtn" aria-controls="sheet" aria-expanded="false" hidden>Optik form <span id="cnt">0/40</span></button>
+  </div>
+  <div class="prog" id="prog" hidden><b></b></div>
+</header>
+
+<main class="wrap">
+  <!-- Başlangıç -->
+  <section class="start" id="vStart">
+    <h1>Parantezdeki açıklama hangi söze uymuyor?</h1>
+    <p class="lead">TYT Türkçe'nin sözcükte ve cümlede anlam sorularından, orta-zor düzeyde 40 soruluk bir test. Cevap anahtarı ve her sorunun açıklaması test bitince açılır.</p>
+    <ul class="facts"><li>40 soru</li><li>Önerilen süre 45 dk</li><li>4 yanlış 1 doğruyu götürür</li></ul>
+    <div><button type="button" class="btn primary" id="startBtn">Teste başla</button></div>
+    <div class="card tips">
+      <h2>Bu soru nasıl çözülür?</h2>
+      <ul>
+        <li>Parantezdeki sözü, altı çizili sözün yerine koy ve cümleyi yeniden oku. Anlam değişiyorsa cevap odur.</li>
+        <li>Sözcüğün sözlükteki ilk anlamına değil, o cümlede kazandığı anlama bak.</li>
+        <li>Deyimlerde sözcüklere tek tek bakma; deyimin bütününün anlamını düşün.</li>
+        <li>Yanlış açıklama çoğu zaman saçma değildir, yalnızca yakın ama farklı bir anlamdır. Acele etme.</li>
+      </ul>
+      <div class="demo">
+        <p class="passage">Rapordaki öneriler <span class="t"><u>havada kalmış</u></span> (gereksiz uzamış).</p>
+        <small>“Havada kalmak”, dayanaktan yoksun olmak demektir. “Gereksiz uzamış” bunu karşılamıyor; böyle bir söz sorunun cevabı olur.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sınav -->
+  <section class="exam" id="vExam" hidden>
+    <div>
+      <div class="card q">
+        <div class="qhead" id="qhead"></div>
+        <div id="qbody"></div>
+        <div id="opts" role="radiogroup" aria-label="Seçenekler"></div>
+        <p class="hint">Seçimini silmek için aynı şıkka yeniden dokun.<span class="kb"> Klavyede A–E ile işaretleyip ok tuşlarıyla gezebilirsin.</span></p>
+        <div class="nav">
+          <button type="button" class="btn" id="prevBtn">Önceki</button>
+          <button type="button" class="btn flag" id="flagBtn" aria-pressed="false">Sonra bak</button>
+          <button type="button" class="btn primary" id="nextBtn">Sonraki</button>
+        </div>
+      </div>
+      <div class="end"><button type="button" class="btn quiet" data-act="finish">Testi bitir ve cevapları gör</button></div>
+    </div>
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="card sheet" id="sheet" aria-label="Optik form">
+      <h2>Optik form <button type="button" class="btn sm" id="sheetClose">Kapat</button></h2>
+      <div class="rows" id="rows"></div>
+      <div class="legend"><span>Dolu daire: işaretlediğin şık</span><span>Dalgalı numara: sonra bakılacak</span></div>
+      <button type="button" class="btn primary" data-act="finish">Testi bitir</button>
+    </aside>
+  </section>
+
+  <!-- Sonuç -->
+  <section class="res" id="vRes" hidden>
+    <h1>Sonuçların</h1>
+    <div class="score" id="score"></div>
+    <div class="card">
+      <h2>Cevap anahtarı</h2>
+      <div class="rows" id="key"></div>
+      <div class="legend"><span>Yeşil: doğru cevap</span><span>Üstü çizili: senin yanlış işaretin</span><span>✓ doğru · ✗ yanlış · – boş</span></div>
+    </div>
+    <div class="filters" role="group" aria-label="Soruları süz">
+      <button type="button" class="chip" data-f="all" aria-pressed="true">Tümü</button>
+      <button type="button" class="chip" data-f="yanlis" aria-pressed="false">Yanlışlar</button>
+      <button type="button" class="chip" data-f="bos" aria-pressed="false">Boşlar</button>
+      <button type="button" class="btn sm" id="againBtn" style="margin-left:auto">Testi yeniden çöz</button>
+    </div>
+    <div class="revs" id="revs"></div>
+    <p class="empty" id="empty" hidden>Bu grupta soru yok.</p>
+  </section>
+</main>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <h2 id="dt"></h2>
+  <p id="dm"></p>
+  <div class="dbtns"><button type="button" class="btn" id="dno"></button><button type="button" class="btn primary" id="dyes"></button></div>
+</dialog>
+
+<script>
+const L="ABCDE", R=["I","II","III","IV","V"];
+const STEM={
+  p:"Bu parçada numaralanmış sözlerden hangisinin anlamı parantez ( ) içinde verilen açıklamayla <u>uyuşmamaktadır</u>?",
+  s:"Aşağıdaki cümlelerin hangisinde altı çizili sözün anlamı parantez ( ) içinde <u>yanlış</u> verilmiştir?",
+  c:"Aşağıdaki cümlelerden hangisi parantez ( ) içinde verilen anlamla <u>uyuşmamaktadır</u>?"
+};
+const TAG={p:"Numaralanmış sözler",s:"Altı çizili söz",c:"Cümlenin anlamı"};
+const Q=[
+{t:"p",a:2,x:"Usta bir çevirmen, yazarın sesini {bastırmadan|gölgede bırakmadan} metni başka bir dile taşır. Bunun için sözcüklerin yalnızca sözlük anlamını değil, {çağrışımlarını|akla getirdiklerini} da hesaba katar. Aceleye getirilmiş çeviriler ise {yavan|anlaşılması güç} bir dille okurun karşısına çıkar; böyle metinler okuru daha ilk sayfada {uzaklaştırır|soğutur}. İyi çeviri, okura metnin başka bir dilde yazıldığını {unutturur|aklına getirmez}.",
+ e:"“Yavan”, tatsız, sönük, zevk vermeyen demektir. Yavan bir dil anlaşılmaz değil, renksiz ve etkisizdir; “anlaşılması güç” bu sözü karşılamaz."},
+{t:"p",a:1,x:"Kasabanın tek kitapçısı, raflarını {titizlikle|özenle} düzenleyen yaşlı bir adamdı. Müşterilerine kitap seçerken {üstünkörü|isteksizce} davranmaz, onların neyi sevdiğini anlamadan öneride bulunmazdı. Bu {ince|düşünceli} tavrı sayesinde dükkânı, kentteki büyük mağazalarla {boy ölçüşür|yarışır} duruma gelmişti. Kasabalılar onu yalnızca bir esnaf değil, bir {yol gösterici|kılavuz} olarak görürdü.",
+ e:"“Üstünkörü”, gereken özeni göstermeden, baştan savma anlamındadır. İsteksizlik değil özensizlik bildirir."},
+{t:"p",a:4,x:"Şair, ilk kitabında {yalın|süssüz} bir söyleyişi benimsemişti. Sonraki yıllarda imgelerin {yoğun|çok sayıda, sık} kullanıldığı, {kapalı|anlamı kolay kavranmayan} bir şiire yöneldi. Eleştirmenlerin bir bölümü bu değişimi {yerinde buldu|uygun gördü}; bir bölümü ise şairin okurdan {koptuğunu|sıkıldığını} öne sürdü.",
+ e:"“Okurdan kopmak”, okurla bağını yitirmek, ondan uzaklaşmak demektir. “Sıkılmak” bu anlamı vermez."},
+{t:"p",a:0,x:"Romanın kahramanı, {köklü|varlıklı} bir aileden gelmesine karşın gösterişten uzak bir yaşam sürer. Yazar onu anlatırken {abartıya kaçmaz|ölçüyü elden bırakmaz}; kusurlarını da {gözler önüne serer|açıkça gösterir}. Bu yüzden okur, kahramanı {yadırgamaz|tuhaf bulmaz}, onunla kolayca {bağ kurar|yakınlık duyar}.",
+ e:"“Köklü aile”, geçmişi eskiye dayanan, tanınmış aile demektir. Köklü bir aile zengin olmak zorunda değildir; “varlıklı” başka bir özelliktir."},
+{t:"p",a:3,x:"Belgesel, buzulların erimesini {çarpıcı|etkileyici} görüntülerle anlatıyor. Yönetmen, izleyiciyi korkutmak yerine onu düşünmeye {sevk ediyor|yöneltiyor}. Bilim insanlarının {öngörüleri|tahminleri} de filmde yer alıyor. Yine de yapım, sorunun çözümüne ilişkin {doyurucu|uzun uzadıya} bir bilgi sunmuyor; bu eksiklik filmin etkisini bir ölçüde {zayıflatıyor|azaltıyor}.",
+ e:"“Doyurucu bilgi”, yeterli, tatmin edici bilgi demektir. Bir bilgi uzun olduğu hâlde doyurucu olmayabilir; “uzun uzadıya” nicelik bildirir."},
+{t:"p",a:4,x:"Genç araştırmacı, tezini hazırlarken yüzlerce kaynağı {taradı|gözden geçirdi}. Bulgularını {ihtiyatla|temkinli biçimde} yorumladı; kesin yargılardan {kaçındı|uzak durdu}. Jüri üyeleri çalışmayı {kapsamlı|geniş içerikli} buldu, yalnızca sonuç bölümünün {havada kaldığını|gereksiz uzadığını} belirtti.",
+ e:"“Havada kalmak”, dayanaktan yoksun olmak, bir temele oturmamak demektir. Uzunlukla ilgisi yoktur."},
+{t:"s",a:3,o:["Bu konuda sana {arka çıkacağımı|destek olacağımı} biliyorsun.","Yan masada konuşulanlara {kulak kabarttı|belli etmeden dinlemeye çalıştı}.","Yıllardır görmediği arkadaşıyla karşılaşınca {gözleri doldu|ağlayacak gibi oldu}.","Kardeşinin başarısını duyunca {ağzı kulaklarına vardı|çok şaşırdı}.","Sonuçlar açıklanana kadar {içi içine sığmadı|sabırsızlıktan yerinde duramadı}."],
+ e:"“Ağzı kulaklarına varmak”, çok sevinmek, sevinci yüzünden okunmak demektir. Şaşırmayı değil sevinci anlatır."},
+{t:"p",a:0,x:"Müze, kentin {gözden uzak|bakımsız} bir köşesinde, eski bir konakta kurulmuş. Koleksiyonun {göz bebeği|en değerli parçası}, üç yüz yıllık bir el yazması. Görevliler ziyaretçilere {bıkıp usanmadan|sıkılmadan, sabırla} bilgi veriyor. Sergilenen eşyaların her biri {geçmişe ışık tutuyor|geçmişi aydınlatıyor}; bu yüzden müze, tarih meraklılarının {uğrak yeri|sık sık geldiği yer} olmuş.",
+ e:"“Gözden uzak”, kolay görülmeyen, sapa, pek kimsenin uğramadığı demektir. Bir yerin bakımlı olup olmadığını anlatmaz."},
+{t:"p",a:2,x:"Yazarın son öykü kitabı, sıradan insanların {gündelik|her günkü} yaşamına odaklanıyor. Öykülerde olaylar {geri planda kalıyor|ikinci derecede önem taşıyor}; asıl ağırlık kişilerin iç dünyasına veriliyor. Yazar {duru|özgün} bir Türkçeyle yazdığı için öyküler {bir solukta|ara vermeden, çabucak} okunuyor. Kitabın tek kusuru, kimi öykülerin sonunun {aceleye getirilmiş|özen gösterilmeden çabucak bitirilmiş} olması.",
+ e:"“Duru”, açık, pürüzsüz, anlaşılır demektir. “Özgün” ise başkasına benzemeyen anlamındadır; bir dil duru olup özgün olmayabilir."},
+{t:"p",a:1,x:"Oyuncu, sahneye ilk çıktığı yıllarda {çekingen|utangaç} biriydi. Ustalarından aldığı eleştirileri {sineye çekti|önemsemedi}, her birinden bir ders çıkardı. Zamanla rolüne {bürünmeyi|rolündeki kişiliğe girmeyi} öğrendi. Bugün seyirciyi {avucunun içine alan|etkisi altında tutan} bir sanatçı olarak {anılıyor|tanınıyor}.",
+ e:"“Sineye çekmek”, hoşa gitmeyen bir şeye ses çıkarmadan katlanmak demektir. Önemsememek değildir; zaten oyuncu eleştirilerden ders çıkarmıştır."},
+{t:"c",a:3,o:["Keşke o gün seni dinleseydim. (pişmanlık)","Bu saatte gelmediğine göre toplantıyı unutmuş olmalı. (çıkarım)","Yağmur dinerse yürüyüşe çıkarız. (koşul)","Erken yattığı hâlde sabah uyanamadı. (neden-sonuç)","Otobüsü kaçırmamak için evden erken çıktı. (amaç)"],
+ e:"“-diği hâlde” beklenenin tersine bir durum bildirir (karşıtlık). Erken yatmak, uyanamamanın nedeni değildir; cümlede neden-sonuç yoktur."},
+{t:"p",a:0,x:"Genç yönetmenin ilk filmi, festivalde {göz doldurdu|herkesi şaşırttı}. Senaryo, {alışılmış|bilindik} kalıpların dışına çıkıyor; oyuncular da rollerinin {hakkını veriyor|gereğini eksiksiz yerine getiriyor}. Filmin müzikleri sahnelerle {örtüşüyor|uyum gösteriyor}. Yalnızca son bölüm, öncekilere göre biraz {sönük|etkisiz, cansız} kalmış.",
+ e:"“Göz doldurmak”, beğenilmek, yeterli ve başarılı bulunmak demektir. Şaşırtmak anlamı taşımaz."},
+{t:"p",a:3,x:"Deneme, yazarın kendisiyle {söyleşmesidir|konuşmasıdır}. Bu türde yazar, düşüncelerini kanıtlama {kaygısı|endişesi} taşımaz. Konular {gelişigüzel|rastgele} seçilmiş gibi görünse de her denemenin {örtük|tartışmalı} bir amacı vardır. İyi denemeci, okuru {sıkmadan|bunaltmadan} düşündürmeyi bilir.",
+ e:"“Örtük”, açıkça söylenmemiş, kapalı, gizli demektir. “Tartışmalı” ise üzerinde anlaşılamamış anlamına gelir."},
+{t:"s",a:0,o:["Yeni müdür, bu sorunu {oluruna bıraktı|başkasına devretti}.","Bu haberin {aslı astarı yok|gerçekle ilgisi yok}.","Borcunu ödeyince {üzerinden yük kalktı|rahatladı}.","Ustanın {eli ağır|yavaş iş görüyor} ama yaptığı iş temiz.","Tartışma büyüyünce o {alttan aldı|yumuşak davrandı}."],
+ e:"“Oluruna bırakmak”, bir işi kendi akışına, kendiliğinden sonuçlanmaya bırakmak demektir. Başkasına devretmek değildir."},
+{t:"p",a:4,x:"Gezgin, yolculuklarında {iz bırakan|unutulmayan} anları defterine yazar. Gittiği yerlerde yöre halkıyla {kaynaşır|yakınlık kurar}, onların sofrasına konuk olur. Yazılarında gördüklerini {süslemeden|abartmadan, olduğu gibi} aktarır. Ona göre gezmek, insanın {ufkunu genişletir|görüşünü, anlayışını geliştirir}; evde oturan ise dünyaya hep aynı pencereden bakmaya {yazgılıdır|isteklidir}.",
+ e:"“Yazgılı”, alnına yazılmış, mahkûm, bundan kaçamayacak demektir. İsteği değil zorunluluğu anlatır."},
+{t:"p",a:2,x:"Köyün yaşlıları, eski hasat şenliklerini {özlemle|hasretle} anlatır. O günlerde komşular birbirinin tarlasında {imece usulü|el birliğiyle, yardımlaşarak} çalışırmış. Şimdi gençlerin çoğu kente göçtüğü için tarlalar {nadasa bırakılmış|satışa çıkarılmış}. Geride kalanlar, köyü {ayakta tutmak|yaşatmak} için {canla başla|bütün gücüyle, büyük bir istekle} uğraşıyor.",
+ e:"“Nadasa bırakmak”, toprağı dinlensin diye bir süre ekmeden bırakmak demektir. Satmakla ilgisi yoktur."},
+{t:"p",a:1,x:"Bilim tarihi, {sarsılmaz|sağlam, yıkılmaz} sanılan kuramların yıkılışıyla doludur. Yeni bir buluş çoğu zaman önce {kuşkuyla karşılanır|görmezden gelinir}, ardından sınanır. Sınamalardan {alnının akıyla çıkan|başarıyla, kusursuz biçimde çıkan} düşünceler kabul görür. Böylece bilim, yanlışlarını {ayıklayarak|seçip atarak} ilerler; bu yönüyle öteki uğraşlardan {ayrılır|farklılaşır}.",
+ e:"“Kuşkuyla karşılamak”, doğruluğundan emin olmamak, şüpheyle bakmak demektir. Görmezden gelinen bir buluş sınanmaz; burada buluşla ilgileniliyor ama ona güvenilmiyor."},
+{t:"s",a:2,o:["Bu {ince|ayrıntılı, dikkat isteyen} işi ancak o başarır.","Konuşmasında {kırıcı|incitici} sözlerden kaçındı.","Sorunun {özüne|sonucuna} inmeden çözüm üretemeyiz.","Bu {kaba|ayrıntıya inmeyen, yaklaşık} hesapla bütçe yapılmaz.","Bu çocuğun {parlak|umut veren, başarılı} bir geleceği var."],
+ e:"“Öz”, bir şeyin temeli, asıl ögesi demektir. “Sorunun özüne inmek” sorunun aslına, kaynağına inmektir; sonucuna değil."},
+{t:"p",a:3,x:"Çocukluğumun geçtiği sokak, artık {tanınmaz hâlde|çok değişmiş}. Bahçeli evlerin yerinde {göğe uzanan|çok yüksek} binalar var. Köşedeki bakkal {kepenk indirmiş|dükkânını kapatmış}; komşuların çoğu başka semtlere {savrulmuş|kendi isteğiyle taşınmış}. Yine de o sokaktan her geçişimde {içim burkulur|çok üzülürüm}.",
+ e:"“Savrulmak”, elinde olmayan nedenlerle oraya buraya dağılmak, sürüklenmek demektir. İsteyerek yapılan bir işi anlatmaz."},
+{t:"p",a:4,x:"Ressam, atölyesini kentin gürültüsünden {ırak|uzak} bir köye taşıdı. Burada doğanın renklerini tuvaline {aktarıyor|yansıtıyor}. Son sergisindeki tablolar, önceki {karamsar|kötümser} havadan {sıyrılmış|kurtulmuş} görünüyor. Sanatçı, bu değişimi köy yaşamının {dinginliğine|canlılığına} bağlıyor.",
+ e:"“Dinginlik”, sakinlik, durgunluk, huzur demektir. “Canlılık” neredeyse bunun karşıtıdır."},
+{t:"c",a:0,o:["Bunca yıldır bir kez bile arayıp sormadın. (pişmanlık)","Korkarım bu gidişle projeyi zamanında bitiremeyeceğiz. (kaygı)","Aman, karşıdan karşıya geçerken dikkat et! (uyarı)","Meğer anahtar cebimdeymiş. (sonradan fark etme)","İstersen bu konuyu bir de öğretmenine danış. (öneri)"],
+ e:"Cümlede konuşan kişi kendi yaptığından değil, karşısındakinin yapmadığından yakınıyor. Bu pişmanlık değil sitemdir."},
+{t:"p",a:2,x:"Usta gazeteci, haberlerinde {yansız|tarafsız} kalmaya özen gösterirdi. Kaynağını doğrulamadan tek satır {kaleme almazdı|yazmazdı}. Mesleğe yeni başlayanlara {el uzatır|akıl danışır}, bildiklerini onlardan esirgemezdi. Yazılarındaki {keskin|sert ve etkili} dil yüzünden zaman zaman {hedef gösterildi|saldırılara açık duruma getirildi}; ama doğru bildiğinden şaşmadı.",
+ e:"“El uzatmak”, yardım etmek demektir. “Akıl danışmak” ise tam tersine başkasından yardım istemektir."},
+{t:"s",a:4,o:["Ödevini {baştan savma|özensiz} yaptığı her hâlinden belliydi.","Olanları {kılı kırk yararak|çok titiz davranarak} inceledi.","Bu görev tam sana göre, {biçilmiş kaftan|çok uygun}.","Yıllarca {dişinden tırnağından artırarak|büyük güçlüklerle tasarruf ederek} bu evi aldı.","Dedem bu konularda {ağzı sıkı|az konuşan} biridir."],
+ e:"“Ağzı sıkı”, sır saklayan, her şeyi herkese söylemeyen demektir. Az konuşan kişi için “ağzı var dili yok” gibi sözler kullanılır."},
+{t:"p",a:0,x:"Dil, {durağan|yavaş işleyen} bir yapı değildir; toplumla birlikte değişir. Kimi sözcükler zamanla {kullanımdan düşer|kullanılmaz olur}, kimileri yeni anlamlar {kazanır|edinir}. Bu değişime {direnmek|karşı koymak} boşunadır. Yapılması gereken, dilin kendi olanaklarını {işleterek|kullanarak, çalıştırarak} yeni kavramlara karşılık bulmaktır.",
+ e:"“Durağan”, hareketsiz, değişmeyen, olduğu gibi kalan demektir. Yavaş da olsa işleyen bir şey durağan değildir."},
+{t:"p",a:1,x:"Yaşlı çınar, meydanın {simgesi|sembolü} sayılır. Belediye, ağacın çevresine yapılmak istenen otoparka {sıcak bakmadı|karar veremedi}; mahalleli de bu tutumu {alkışladı|çok beğendi, destekledi}. Uzmanlar, ağacın {ayakta kalması|yaşamını sürdürmesi} için düzenli bakım öneriyor. Çınar, bugün de gölgesinde {soluklananlara|dinlenenlere} kucak açıyor.",
+ e:"“Sıcak bakmamak”, bir öneriyi olumlu karşılamamak, uygun bulmamak demektir. Kararsızlık değil, olumsuz bir tutum bildirir."},
+{t:"s",a:1,o:["Kazadan sonra uzun süre {kendine gelemedi|toparlanamadı}.","O gün yaşadıkları {kulağına küpe oldu|hiç ilgisini çekmedi}.","Sorunu çözmek için günlerce {kafa yordu|uzun uzun düşündü}.","Bu işin altından kalkamayacağını anlayınca {pes etti|yenilgiyi kabul etti}.","Yaptığı hatayı anlayınca {yüzü kızardı|utandı}."],
+ e:"“Kulağına küpe olmak”, bir olaydan ders alıp onu hiç unutmamak demektir. İlgisizlik değil, tam tersine akılda tutmayı anlatır."},
+{t:"p",a:3,x:"Kitap fuarı bu yıl da {yoğun|büyük} ilgi gördü. Yayıncılar, okurların özellikle çocuk kitaplarına {rağbet ettiğini|istek gösterdiğini} söylüyor. İmza günlerinde yazarlar okurlarıyla {yüz yüze geldi|doğrudan buluştu}. Kimi ziyaretçiler ise kitap fiyatlarının {el yaktığından|sürekli değiştiğinden} yakındı. Düzenleyiciler, gelecek yıl fuarın süresini uzatmayı {tasarlıyor|planlıyor}.",
+ e:"Fiyatlar için kullanılan “el yakmak”, çok pahalı olmak demektir. Fiyatların değişmesiyle ilgisi yoktur."},
+{t:"c",a:2,o:["Bu film, yönetmenin öncekilerine göre daha sürükleyici. (karşılaştırma)","Hava kararınca köye döndük. (zaman)","Sen de bizimle gelseydin ne iyi olurdu! (öneri)","Ödevini bitirmeden dışarı çıkamazsın. (koşul)","Belki akşama doğru yağmur yağar. (olasılık)"],
+ e:"Öneri, yapılabilecek bir iş için söylenir. Burada iş geçmişte kalmış ve gerçekleşmemiştir; cümle hayıflanma (gerçekleşmemiş istek) bildirir."},
+{t:"p",a:2,x:"İlk romanını yayımlatmak isteyen yazar, pek çok yayınevinin kapısını {aşındırdı|sık sık çaldı}. Dosyası kimi yerde {geri çevrildi|reddedildi}, kimi yerde {rafa kaldırıldı|incelemeye alındı}. Sonunda küçük bir yayınevi ona {kucak açtı|sahip çıktı}. Kitap yayımlanınca kısa sürede {elden ele dolaştı|pek çok kişi tarafından okundu}.",
+ e:"“Rafa kaldırmak”, bir işi ele almamak, bekletip unutulmaya bırakmak demektir. İncelemeye almak bunun karşıtıdır."},
+{t:"s",a:3,o:["Bu roman, yazıldığı dönemin toplum yapısına {ayna tutuyor|onu olduğu gibi yansıtıyor}.","Yazar, ikinci kitabında {çıtayı yükseltti|daha üstün bir düzeye ulaştı}.","Şairin dizeleri yıllardır {dilden dile dolaşıyor|herkesçe söyleniyor}.","Eleştirmen, yapıtın eksiklerini {göz ardı etti|sert biçimde eleştirdi}.","Öyküdeki olaylar gerçek yaşamla {örtüşüyor|uyuşuyor}."],
+ e:"“Göz ardı etmek”, önemsememek, dikkate almamak, görmezden gelmek demektir. Eleştirmek bunun tersidir."},
+{t:"p",a:0,x:"Takımın yeni kaptanı, gençliğinde {dik başlı|kendine güvenen} biri olarak tanınırdı. Yıllar onu {yumuşattı|daha uysal biri yaptı}; artık eleştirilere {kulak veriyor|önem verip dinliyor}. Zor maçlarda takımı {toparlıyor|bir araya getirip düzene sokuyor}, yenilgilerden sonra da kimseyi {suçlamıyor|kabahatli bulmuyor}.",
+ e:"“Dik başlı”, inatçı, söz dinlemeyen demektir. Olumsuz bir özelliktir; “kendine güvenen” ise olumlu ve farklı bir anlam taşır."},
+{t:"c",a:4,o:["Onun bu kadar güzel resim yaptığını bilmiyordum. (şaşırma)","Kar yağdığı için yollar kapandı. (neden-sonuç)","Bu sözleri sana söylememeliydim. (pişmanlık)","Ya uçağı kaçırırsak? (kaygı)","Bu yolu yürüyerek çıkmak, arabayla çıkmaktan daha zevkli. (amaç-sonuç)"],
+ e:"Cümlede iki eylem “daha zevkli” denerek kıyaslanıyor. Bir amaç ya da sonuç bildirilmiyor; anlam karşılaştırmadır."},
+{t:"s",a:0,o:["Uzun yoldan gelen konuklar çok {bitkin|keyifsiz} görünüyordu.","Soruya {kaçamak|açık olmayan, üstü kapalı} bir yanıt verdi.","Sunumunu {yetkin|olgun, kusursuz} bir anlatımla tamamladı.","Toplantıda {ılımlı|aşırıya kaçmayan} bir tutum sergiledi.","{Yersiz|gereksiz, uygunsuz} eleştiriler onu yıldırmadı."],
+ e:"“Bitkin”, çok yorgun, gücü tükenmiş demektir. Keyifsizlik ruh hâlini, bitkinlik ise yorgunluğu anlatır."},
+{t:"p",a:4,x:"Antik kentteki kazılar bu yaz yeniden {hız kazandı|hızlandı}. Arkeologlar, {gün yüzüne çıkarılan|ortaya çıkarılan} mozaiklerin {eşsiz|benzeri olmayan} olduğunu belirtiyor. Buluntular, kentin geçmişinin sanıldığından daha eski bir döneme {uzandığını|dayandığını} gösteriyor. Kazı başkanı, çalışmaların ödenek yetersizliği yüzünden {sekteye uğramasından|yön değiştirmesinden} endişe ediyor.",
+ e:"“Sekteye uğramak”, aksamak, kesintiye uğramak, duraklamak demektir. Yön değiştirmek anlamı taşımaz."},
+{t:"p",a:1,x:"Şiir, sözcüklerin {alışılmış|bilinen} anlamlarını aşma çabasıdır. Şair, sözcükleri {damıtarak|süsleyerek} kullanır; dile yeni olanaklar kazandırır. Bu yüzden şiiri düzyazıya {çevirmek|dönüştürmek}, onun {büyüsünü|etkileyiciliğini} bozar. İyi bir dize, okurun belleğine {kazınır|silinmeyecek biçimde yerleşir}.",
+ e:"“Damıtmak”, süzmek, arıtıp özünü almak demektir. Sözcükleri damıtan şair fazlalıkları atar; süslemek ise ekleme yapmaktır."},
+{t:"s",a:2,o:["Bu sözler onun ne kadar {olgun|deneyimli ve anlayışlı} biri olduğunu gösteriyor.","Kasabanın {ıssız|kimsesiz, sessiz} sokaklarında yürüdük.","Çocuk, annesinin sözlerini {umursamaz|anlamaz} bir tavırla dinledi.","Yazar konuyu {yüzeysel|derinine inmeden} ele almış.","Toplantıda {tutarlı|birbiriyle çelişmeyen} düşünceler ileri sürdü."],
+ e:"“Umursamaz”, aldırış etmeyen, önem vermeyen demektir. Çocuk sözleri anlıyor ama önemsemiyor."},
+{t:"c",a:1,o:["Ne olursa olsun yarın yola çıkacağım. (kararlılık)","Güya bu yıl düzenli spor yapacaktı. (olasılık)","Elektrikler kesilince film yarıda kaldı. (neden-sonuç)","Tut ki bu işi başaramadık. (varsayım)","Ne güzel bir bahçe bu böyle! (beğenme)"],
+ e:"“Güya … -acaktı” yapılacağı söylenip yapılmayan işler için kullanılır. Cümle olasılık değil, gerçekleşmemiş bir beklenti ve sitem bildirir."},
+{t:"s",a:4,o:["Sınava {topu topu|yalnızca, hepsi hepsi} iki gün kaldı.","Müzeyi {baştan sona|tümüyle} gezdik.","Bu konuyu {üstünkörü|derinine inmeden, şöyle bir} geçmeyelim.","Borcunu {peyderpey|azar azar, bölüm bölüm} ödedi.","Toplantıya {apar topar|isteksizce} çağrıldık."],
+ e:"“Apar topar”, büyük bir aceleyle, telaşla demektir. İsteksizlik anlamı taşımaz."},
+{t:"c",a:3,o:["Sınava az kaldı; artık oyunu bırakmalısın. (gereklilik)","Bir ev alabilsem de bahçesinde çiçek yetiştirsem. (istek)","Bu konuyu bir kez daha anlatır mısınız? (rica)","Raporu bugün teslim etmezsen proje iptal olacak. (amaç-sonuç)","Sakın bu ilacı aç karnına içme! (uyarı)"],
+ e:"“Teslim etmezsen” sözü bir şart bildirir: iptal, raporun teslim edilmemesine bağlanmıştır. Cümlede amaç yok, koşul vardır."},
+{t:"s",a:1,o:["Bu olay, aralarındaki dostluğu {pekiştirdi|sağlamlaştırdı}.","Yeni yasa, uzun tartışmaların ardından {yürürlüğe girdi|gündeme geldi}.","Sanatçı, eleştirilere {kayıtsız kaldı|ilgi göstermedi}.","Proje, kaynak yetersizliğinden {askıya alındı|geçici olarak durduruldu}.","Yazar, okurlarının beklentilerini {boşa çıkarmadı|karşıladı}."],
+ e:"“Yürürlüğe girmek”, uygulanmaya başlamak demektir. “Gündeme gelmek” ise konuşulmaya, tartışılmaya başlanmaktır."}
+];/*ENDQ*/
+const N=Q.length, KEY="anlam-testi-v1";
+const $=id=>document.getElementById(id);
+function fresh(){return{a:Array(N).fill(null),f:Array(N).fill(false),cur:0,view:"start",sec:0}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.a)&&s.a.length===N&&Array.isArray(s.f))return s}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load()||fresh(), filter="all";
+
+function fmt(txt,num,hl){let k=0;return txt.replace(/\{([^|}]+)\|([^}]+)\}/g,(m,w,g)=>{const i=k++;return '<span class="t'+(num?" tn":"")+(hl===i?" hl":"")+'"><u>'+w+"</u>"+(num?"<i>"+R[i]+"</i>":"")+'</span> <span class="g">('+g+")</span>"})}
+function clock(s){const m=Math.floor(s/60),r=s%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0")}
+function optText(q,k){return q.t==="p"?R[k]:fmt(q.o[k])}
+function answered(){return S.a.filter(x=>x!=null).length}
+
+function rowsHTML(done){
+  return Q.map((q,i)=>{
+    const a=S.a[i];
+    const bubs=L.split("").map((l,k)=>{let c="b";if(done){if(k===q.a)c+=" ok";else if(a===k)c+=" bad"}else if(a===k)c+=" on";return '<span class="'+c+'" aria-hidden="true">'+l+"</span>"}).join("");
+    let cls="row",label="Soru "+(i+1)+", ",mark="";
+    if(done){const st=a==null?"bos":a===q.a?"ok":"bad";mark='<span class="mark '+st+'" aria-hidden="true">'+(st==="ok"?"✓":st==="bad"?"✗":"–")+"</span>";label+=(st==="ok"?"doğru":st==="bad"?"yanlış":"boş")+", doğru cevap "+L[q.a]}
+    else{if(i===S.cur)cls+=" cur";if(S.f[i])cls+=" fl";label+=(a==null?"boş":"işaretli "+L[a])+(S.f[i]?", sonra bakılacak":"")}
+    return '<button type="button" class="'+cls+'" data-q="'+i+'" aria-label="'+label+'"><span class="rn">'+(i+1)+"</span>"+bubs+mark+"</button>"}).join("");
+}
+function renderMeta(){
+  const n=answered();
+  $("cnt").textContent=n+"/"+N;
+  $("prog").firstElementChild.style.width=(n/N*100)+"%";
+  $("timer").textContent=clock(S.sec);
+  $("rows").innerHTML=rowsHTML(false);
+}
+function renderExam(){
+  const i=S.cur,q=Q[i];
+  $("qhead").innerHTML='<span class="qn">Soru '+(i+1)+"<small> / "+N+'</small></span><span class="tag">'+TAG[q.t]+"</span>";
+  $("qbody").innerHTML=(q.t==="p"?'<p class="passage">'+fmt(q.x,true)+"</p>":"")+'<p class="stem">'+STEM[q.t]+"</p>";
+  const o=$("opts");
+  o.className="opts "+(q.t==="p"?"opts-row":"opts-col");
+  o.innerHTML=L.split("").map((l,k)=>'<button type="button" class="opt" role="radio" aria-checked="'+(S.a[i]===k)+'" data-k="'+k+'"><span class="bub">'+l+'</span><span class="ot">'+optText(q,k)+"</span></button>").join("");
+  $("prevBtn").disabled=i===0;
+  $("nextBtn").textContent=i===N-1?"Testi bitir":"Sonraki";
+  $("flagBtn").setAttribute("aria-pressed",S.f[i]);
+  renderMeta();
+}
+function go(i){S.cur=Math.max(0,Math.min(N-1,i));save();renderExam();closeSheet();window.scrollTo(0,0)}
+function pick(k){S.a[S.cur]=S.a[S.cur]===k?null:k;save();renderExam()}
+
+function reviewHTML(q,i){
+  const a=S.a[i],st=a==null?"bos":a===q.a?"dogru":"yanlis";
+  const pill={bos:"Boş bıraktın",dogru:"Doğru",yanlis:"Yanlış"}[st];
+  const name=k=>L[k]+(q.t==="p"?") "+R[k]:"");
+  let body;
+  if(q.t==="p")body='<p class="passage">'+fmt(q.x,true,q.a)+'</p><p class="stem">'+STEM.p+"</p>";
+  else body='<p class="stem">'+STEM[q.t]+'</p><ol class="ropts">'+q.o.map((o,k)=>'<li class="'+(k===q.a?"ok":a===k?"bad":"")+'"><span class="bub">'+L[k]+'</span><span class="ot">'+fmt(o)+(k===q.a?'<em class="mk">Doğru cevap</em>':a===k?'<em class="mk">Senin cevabın</em>':"")+"</span></li>").join("")+"</ol>";
+  const ans='<p class="ans">Doğru cevap: <span class="c">'+name(q.a)+"</span>"+(st==="yanlis"?' · Senin cevabın: <span class="w">'+name(a)+"</span>":"")+"</p>";
+  return '<article class="rev '+st+'" id="r'+i+'" data-st="'+st+'"><div class="qhead"><span class="qn">Soru '+(i+1)+'</span><span class="pill">'+pill+"</span></div>"+body+ans+'<div class="why"><b>Neden?</b> '+q.e+"</div></article>";
+}
+function applyFilter(){
+  let n=0;
+  document.querySelectorAll(".rev").forEach(el=>{const show=filter==="all"||el.dataset.st===filter;el.hidden=!show;if(show)n++});
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.f===filter));
+  $("empty").hidden=n>0;
+}
+function renderResult(){
+  let d=0,y=0,b=0;
+  Q.forEach((q,i)=>{const a=S.a[i];if(a==null)b++;else if(a===q.a)d++;else y++});
+  const net=(d-y/4).toFixed(2).replace(".",",");
+  $("score").innerHTML='<div class="tile net"><b>'+net+'</b><span>Net</span></div><div class="tile d"><b>'+d+'</b><span>Doğru</span></div><div class="tile y"><b>'+y+'</b><span>Yanlış</span></div><div class="tile"><b>'+b+'</b><span>Boş</span></div><div class="tile"><b>'+clock(S.sec)+"</b><span>Süre</span></div>";
+  $("key").innerHTML=rowsHTML(true);
+  $("revs").innerHTML=Q.map(reviewHTML).join("");
+  filter="all";applyFilter();
+}
+function show(v){
+  S.view=v;save();
+  $("vStart").hidden=v!=="start";$("vExam").hidden=v!=="exam";$("vRes").hidden=v!=="result";
+  const ex=v==="exam";
+  $("timer").hidden=!ex;$("sheetBtn").hidden=!ex;$("prog").hidden=!ex;
+  closeSheet();
+  if(ex)renderExam();
+  if(v==="result")renderResult();
+  window.scrollTo(0,0);
+}
+function openSheet(){$("sheet").classList.add("open");$("scrim").hidden=false;$("sheetBtn").setAttribute("aria-expanded","true")}
+function closeSheet(){$("sheet").classList.remove("open");$("scrim").hidden=true;$("sheetBtn").setAttribute("aria-expanded","false")}
+
+let onYes=null;
+function ask(title,msg,yes,no,cb){
+  const d=$("dlg");
+  if(!d.showModal){cb();return}
+  $("dt").textContent=title;$("dm").textContent=msg;$("dyes").textContent=yes;$("dno").textContent=no;onYes=cb;
+  d.showModal();
+}
+$("dno").addEventListener("click",()=>$("dlg").close());
+$("dyes").addEventListener("click",()=>{$("dlg").close();if(onYes)onYes()});
+function finish(){
+  const b=N-answered();
+  ask("Testi bitirelim mi?",b>0?b+" soru boş. Bitirdikten sonra cevaplarını değiştiremezsin.":"Bütün soruları işaretledin. Bitirdikten sonra cevaplarını değiştiremezsin.","Bitir, cevapları gör","Çözmeye devam et",()=>show("result"));
+}
+
+$("startBtn").addEventListener("click",()=>show("exam"));
+$("prevBtn").addEventListener("click",()=>go(S.cur-1));
+$("nextBtn").addEventListener("click",()=>{if(S.cur===N-1)finish();else go(S.cur+1)});
+$("flagBtn").addEventListener("click",()=>{S.f[S.cur]=!S.f[S.cur];save();renderExam()});
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(b)pick(+b.dataset.k)});
+$("rows").addEventListener("click",e=>{const r=e.target.closest(".row");if(r)go(+r.dataset.q)});
+$("key").addEventListener("click",e=>{const r=e.target.closest(".row");if(!r)return;filter="all";applyFilter();const el=$("r"+r.dataset.q);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})});
+$("sheetBtn").addEventListener("click",()=>{$("sheet").classList.contains("open")?closeSheet():openSheet()});
+$("sheetClose").addEventListener("click",closeSheet);
+$("scrim").addEventListener("click",closeSheet);
+document.addEventListener("click",e=>{
+  if(e.target.closest('[data-act="finish"]'))finish();
+  const c=e.target.closest(".chip");if(c){filter=c.dataset.f;applyFilter()}
+});
+$("againBtn").addEventListener("click",()=>ask("Test sıfırlansın mı?","Bütün işaretlerin ve süren silinir, test baştan başlar.","Sıfırla ve baştan başla","Vazgeç",()=>{S=fresh();show("exam")}));
+document.addEventListener("keydown",e=>{
+  if(S.view!=="exam"||$("dlg").open||e.ctrlKey||e.metaKey||e.altKey)return;
+  const k=e.key.toLowerCase(),i="abcde".indexOf(k);
+  if(k.length===1&&i>-1){pick(i);e.preventDefault()}
+  else if(e.key==="ArrowRight"){go(S.cur+1)}
+  else if(e.key==="ArrowLeft"){go(S.cur-1)}
+  else if(e.key==="Escape"){closeSheet()}
+});
+setInterval(()=>{if(S.view==="exam"&&!document.hidden&&!$("dlg").open){S.sec++;$("timer").textContent=clock(S.sec);if(S.sec%5===0)save()}},1000);
+show(S.view==="exam"||S.view==="result"?S.view:"start");
+</script>
+</body>
+</html>
